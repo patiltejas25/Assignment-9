@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jQuery Events</title>
+    <script src=".\node_modules\jquery\dist\jquery.min.js"></script>
+	<script>
+
+    $(function() {
+		
+		$("#btn1").click(function () {
+			alert("Button 1 has been clicked!");
+		});
+
+		
+		$("#btn2").bind("click", function () {
+			alert("Button 2 has been clicked");
+		});
+		
+		
+		$("#btn3").on("click", function () {
+			alert("Button 3 has been clicked");
+		});
+		
+		
+		$("#btn4, #btn5").on("click", function (event) {
+			alert(event.target.innerHTML+" has been Clicked");
+		});
+		
+		
+		$("#div1").height("400px")
+					  .width("400px");
+
+		$(function() {
+            $('body').on({
+                click: function() {
+                    window.alert("Mouse has been clicked");
+				},
+				mouseleave: function() {
+                    window.alert("Mouse left");
+				},
+				mouseenter: function(){
+					window.alert("Mouse Entered");
+				}
+            }, '#div1');
+        });
+		
+	
+		$("#div2").height("400px")
+					 .width("400px");
+
+
+		$(function() {
+            $('body').on({
+                click: function() {
+                    $("span").text("Mouse has been clicked");
+				},
+				mouseleave: function() {
+                    $("span").text("Mouse left");
+				},
+				mouseenter: function(){
+					$("span").text("Mouse Entered");
+				}
+            }, '#div2');
+		});
+		
+		
+		$("a").click(function (event) {
+			event.preventDefault();
+			$(this).css("color", "red");
+			window.alert(event.target.nodeName);
+		});
+		
+
+		$(window).resize(function(){
+			$("#browserSize").html("Width: " + $(window).width() + " Height: " + $(window).height());
+		});
+
+
+
+		$("body").on({
+			focus: function(){
+				$(this).css("background-color", "grey");
+			},
+			blur: function(){
+				$(this).css("background-color", "white");
+			}
+		},'#bckg');
+		
+
+		$("form").submit(function(event){
+			event.preventDefault();
+			var nameFlag = true;
+			var emailFlag = true;
+			var alertString= "";
+
+			var name = $("#name").val().trim();
+			var email = $("#email").val().trim();
+
+			if(name == ""){
+				nameFlag = false;
+				$("#name").css("border","1px solid red");
+				alertString += "Name ";
+			}
+			$("#name").val(name);
+			
+
+			if(email == ""){
+				emailFlag = false;
+				$("#email").css("border","1px solid red");
+				alertString +=  "Email";
+			}
+			$("#email").val(email);
+			
+			
+			if(nameFlag && emailFlag){
+				$("#name").css("border","1px solid green");
+				$("#email").css("border","1px solid green");
+			}else{
+				alertString += " is required";
+				window.alert(alertString);
+			}
+
+		});
+
+    });
+	</script>
+</head>
+<body>
+	<button id="btn1">Button 1</button>
+	<button id="btn2">Button 2</button>
+	<button id="btn3">Button 3</button>
+	<button id="btn4">Button 4</button>
+	<button id="btn5">Button 5</button>
+
+	<div id="div1" style="background-color: gray;">Div1</div></br>
+
+	<div id="div2" style="background-color: darkgray">Div2</div>
+	Status of mouse in Div2: <span> </span><br><br>
+
+	<a href="http://modulemedia.com">Link to ModuleMedia</a><br><br>
+
+	Browser Dimensions: <div id="browserSize"></div><br><br>
+
+	Input text box: <input type="text" name="bckg" id="bckg"><br><br>
+
+	<form>
+		Name: <input type="text" name="name" id="name">
+		Email: <input type="email" name="email" id="email">
+		<button type="submit">Submit</button>
+	</form>
+
+	
+</body>
+</html>
